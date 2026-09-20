@@ -9,7 +9,6 @@ import pandas as pd
 CODE_DIR = Path(__file__).resolve().parent
 ROOT = CODE_DIR.parent
 PAPERS = ROOT / "data" / "papers.json"
-EXTRA = ROOT / "data" / "extra_papers.json"
 MIN_PAPERS = 80
 REQUIRED = (
     "paper_id",
@@ -88,22 +87,6 @@ def load_papers(path=None):
     if len(rows) < MIN_PAPERS:
         raise ValueError("need at least %d papers, found %d" % (MIN_PAPERS, len(rows)))
     return rows
-
-
-def merge_corpus(core=None, extra=None, dest=None):
-    core = Path(core) if core else PAPERS
-    extra = Path(extra) if extra else EXTRA
-    dest = Path(dest) if dest else PAPERS
-    a = json.loads(core.read_text(encoding="utf-8"))
-    b = json.loads(extra.read_text(encoding="utf-8")) if extra.exists() else []
-    seen = {r["paper_id"] for r in a}
-    for r in b:
-        if r["paper_id"] in seen:
-            continue
-        a.append(r)
-        seen.add(r["paper_id"])
-    dest.write_text(json.dumps(a, indent=2) + "\n", encoding="utf-8")
-    return a
 
 
 def frame(rows):

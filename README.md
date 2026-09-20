@@ -21,13 +21,7 @@ Linux/macOS: `source .venv/bin/activate`.
 
 The remaining lines in `requirements.txt` are only for the optional live check in `code/sqlrag.py`.
 
-## Rebuild the corpus (one-time after cloning extras)
-
-```bash
-python code/run.py merge
-```
-
-Merges `data/extra_papers.json` into `data/papers.json` if those 50 rows are not already present.
+The full 80-paper sheet is `data/papers.json`.
 
 ## Survey (tables + taxonomy + figures)
 

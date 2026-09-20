@@ -17,11 +17,6 @@ def parse_args():
     s.add_argument("--results", default=str(ROOT / "results"))
     s.add_argument("--figs", default=str(ROOT / "figs"))
 
-    m = sub.add_parser("merge", help="append data/extra_papers.json into data/papers.json")
-    m.add_argument("--core", default=None)
-    m.add_argument("--extra", default=None)
-    m.add_argument("--dest", default=None)
-
     d = sub.add_parser("decide", help="when to use SQL vs RAG")
     d.add_argument("--q", default="", help="business question")
     d.add_argument("--data", default="auto", choices=["auto", "tabular", "text", "both"])
@@ -34,10 +29,6 @@ def parse_args():
 
 def main():
     args = parse_args()
-    if args.cmd == "merge":
-        rows = survey.merge_corpus(args.core, args.extra, args.dest)
-        print("merged", len(rows))
-        return
     rows = survey.load_papers(args.papers)
     if args.cmd == "survey":
         print("papers", len(rows))
